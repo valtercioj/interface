@@ -26,7 +26,7 @@ export default function Sidebar() {
         <label
           htmlFor="menu-open"
           id="mobile-menu-button"
-          className="m-2 rounded-md p-2 text-black hover:cursor-pointer focus:outline-none"
+          className="m-2 rounded-md p-2 text-black hover:cursor-pointer focus:outline-none bg-bg"
         >
           <svg
             id="menu-open-icon"
