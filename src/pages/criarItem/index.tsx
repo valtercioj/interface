@@ -16,7 +16,7 @@ function index() {
             <input
               type="text"
               name="nome"
-              className="h-8 w-96 rounded border border-[#CCC] bg-white-default pl-4 md:w-[25.25rem]"
+              className="h-8 w-80 rounded border border-[#CCC] bg-white-default pl-4 md:w-[25.25rem]"
             />
           </div>
           <div className="flex flex-col">
@@ -24,7 +24,7 @@ function index() {
             <label htmlFor="descricao">Descrição</label>{" "}
             <textarea
               name="descricao"
-              className="h-[8.25rem] rounded border border-[#CCC] bg-white-default px-4 pt-2 md:w-[25.125rem]"
+              className="h-[8.25rem] w-80 rounded border border-[#CCC] bg-white-default px-4 pt-2 md:w-[25.125rem]"
             ></textarea>
           </div>
           <div className="mb-4 mt-5 flex flex-col">
