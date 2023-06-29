@@ -1,22 +1,33 @@
-import React, { useState } from "react";
 import Layout from "@/components/Layout";
+import { GetServerSideProps, NextPage } from "next";
+import { useRouter } from "next/router";
 import Router from "next/router";
-const url = "http://3.128.249.166:8000/api/itens/";
+import { useState } from "react";
+const url = "http://3.128.249.166:8000/api/itens";
 
-function index() {
-  const [name, setName] = useState<string>();
-  const [description, setDescription] = useState<string>();
+type ItemType = {
+  id: number;
+  name: string;
+  description: string;
+};
+
+const editarItem: NextPage<{ item: ItemType }> = ({ item }) => {
+  const router = useRouter();
+  const id = router.query?.id;
+  const [name, setName] = useState<string>(item.name);
+  const [description, setDescription] = useState<string>(item.description);
+
   function handleSubmit() {
-    fetch(url, {
-      method: "POST",
+    fetch(`${url}/${id}/`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, description }), // Envie os dados no corpo da requisição como uma string JSON
+      body: JSON.stringify({ id, name, description }), // Envie os dados no corpo da requisição como uma string JSON
     })
       .then((response) => {
-        if (response.status === 201) {
-          Router.push("itens");
+        if (response.status === 200) {
+          Router.push("/itens");
         }
       })
 
@@ -24,7 +35,6 @@ function index() {
         console.error(error);
       });
   }
-
   return (
     <Layout>
       <div className="flex h-full w-full flex-col items-center pl-4 lg:items-start lg:pl-12">
@@ -67,6 +77,17 @@ function index() {
       </div>
     </Layout>
   );
-}
+};
 
-export default index;
+export default editarItem;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const response = await fetch(`${url}/${id}`);
+  const item = await response.json();
+  return {
+    props: {
+      item,
+    },
+  };
+};
